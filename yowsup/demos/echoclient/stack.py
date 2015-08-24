@@ -16,14 +16,14 @@ from yowsup.common import YowConstants
 from yowsup import env
 
 class YowsupEchoStack(object):
-    def __init__(self, credentials, encryptionEnabled = False):
+    def __init__(self, credentials, log_path, encryptionEnabled = False):
         if encryptionEnabled:
             from yowsup.layers.axolotl                     import YowAxolotlLayer
             layers = (
                 EchoLayer,
                 (YowAuthenticationProtocolLayer, YowMessagesProtocolLayer, YowReceiptProtocolLayer, YowAckProtocolLayer, YowMediaProtocolLayer, YowIqProtocolLayer, YowCallsProtocolLayer),
                 YowAxolotlLayer,
-                YowLoggerLayer,
+                YowLoggerLayer(log_path=log_path),
                 YowCoderLayer,
                 YowCryptLayer,
                 YowStanzaRegulator,
@@ -33,7 +33,7 @@ class YowsupEchoStack(object):
             layers = (
                 EchoLayer,
                 (YowAuthenticationProtocolLayer, YowMessagesProtocolLayer, YowReceiptProtocolLayer, YowAckProtocolLayer, YowMediaProtocolLayer, YowIqProtocolLayer, YowCallsProtocolLayer),
-                YowLoggerLayer,
+                YowLoggerLayer(log_path=log_path),
                 YowCoderLayer,
                 YowCryptLayer,
                 YowStanzaRegulator,

@@ -2,7 +2,7 @@
 __version__ = "2.0.12"
 __author__ = "Tarek Galal"
 
-import sys, argparse, yowsup, logging
+import sys, argparse, yowsup, logging, os.path
 
 HELP_CONFIG = """
 ############# Yowsup Configuration Sample ###########
@@ -23,6 +23,10 @@ password=NDkxNTIyNTI1NjAyMkBzLndoYXRzYXBwLm5ldA==
 """
 
 logger = logging.getLogger("yowsup-cli")
+
+
+LOG_PATH = os.path.join(os.path.expanduser("~"), "yowsup_stack.log")   # TODO — add parameter
+
 
 class YowArgParser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
@@ -265,7 +269,7 @@ class DemosArgParser(YowArgParser):
             print("Error: You must specify a configuration method")
             sys.exit(1)
         try:
-            stack = echoclient.YowsupEchoStack(credentials, self.args["moxie"])
+            stack = echoclient.YowsupEchoStack(credentials, LOG_PATH, encryptionEnabled=self.args["moxie"])
             stack.start()
         except KeyboardInterrupt:
             print("\nYowsdown")
