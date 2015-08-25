@@ -2,7 +2,7 @@
 __version__ = "2.0.12"
 __author__ = "Tarek Galal"
 
-import sys, argparse, yowsup, logging, os.path
+import sys, argparse, yowsup, logging
 
 HELP_CONFIG = """
 ############# Yowsup Configuration Sample ###########
@@ -23,9 +23,6 @@ password=NDkxNTIyNTI1NjAyMkBzLndoYXRzYXBwLm5ldA==
 """
 
 logger = logging.getLogger("yowsup-cli")
-
-
-LOG_PATH = os.path.join(os.path.expanduser("~"), "yowsup_stack.log")   # TODO — add parameter
 
 
 class YowArgParser(argparse.ArgumentParser):

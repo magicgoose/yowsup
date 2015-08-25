@@ -1,10 +1,14 @@
 from yowsup.layers import YowLayer
-
+import os.path
 
 class YowLoggerLayer(YowLayer):
-    def __init__(self, log_path=None):
+
+    LOG_PATH = os.path.join(os.path.expanduser("~"), "yowsup_stack.log")  # TODO — add parameter
+
+
+    def __init__(self):
         super().__init__()
-        self.log_path = log_path
+        self.log_path = self.__class__.LOG_PATH
 
     def send(self, data):
         if self.log_path:

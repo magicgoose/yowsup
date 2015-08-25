@@ -12,16 +12,28 @@ from yowsup.layers.protocol_acks               import YowAckProtocolLayer
 from yowsup.layers.logger                      import YowLoggerLayer
 from yowsup.layers.protocol_iq                 import YowIqProtocolLayer
 from yowsup.layers.protocol_calls              import YowCallsProtocolLayer
+from yowsup.layers.protocol_groups             import YowGroupsProtocolLayer
 from yowsup.common import YowConstants
 from yowsup import env
 
 class YowsupEchoStack(object):
     def __init__(self, credentials, log_path, encryptionEnabled = False):
+        protocol_layers = (
+            YowAuthenticationProtocolLayer,
+            YowMessagesProtocolLayer,
+            YowReceiptProtocolLayer,
+            YowAckProtocolLayer,
+            YowMediaProtocolLayer,
+            YowIqProtocolLayer,
+            YowCallsProtocolLayer,
+            YowGroupsProtocolLayer
+        )
+
         if encryptionEnabled:
-            from yowsup.layers.axolotl                     import YowAxolotlLayer
+            from yowsup.layers.axolotl import YowAxolotlLayer
             layers = (
                 EchoLayer,
-                (YowAuthenticationProtocolLayer, YowMessagesProtocolLayer, YowReceiptProtocolLayer, YowAckProtocolLayer, YowMediaProtocolLayer, YowIqProtocolLayer, YowCallsProtocolLayer),
+                protocol_layers,
                 YowAxolotlLayer,
                 YowLoggerLayer(log_path=log_path),
                 YowCoderLayer,
@@ -32,7 +44,7 @@ class YowsupEchoStack(object):
         else:
             layers = (
                 EchoLayer,
-                (YowAuthenticationProtocolLayer, YowMessagesProtocolLayer, YowReceiptProtocolLayer, YowAckProtocolLayer, YowMediaProtocolLayer, YowIqProtocolLayer, YowCallsProtocolLayer),
+                protocol_layers,
                 YowLoggerLayer(log_path=log_path),
                 YowCoderLayer,
                 YowCryptLayer,

@@ -2,6 +2,8 @@ from yowsup.layers.interface                           import YowInterfaceLayer,
 
 class EchoLayer(YowInterfaceLayer):
 
+
+
     @ProtocolEntityCallback("message")
     def onMessage(self, messageProtocolEntity):
 
