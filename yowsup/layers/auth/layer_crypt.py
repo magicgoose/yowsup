@@ -1,5 +1,7 @@
 from yowsup.layers import YowLayer
+from yowsup.layers.auth.keystream import KeyStream
 from yowsup.layers.network import YowNetworkLayer
+
 class YowCryptLayer(YowLayer):
     '''
         send:       bytearray -> bytearray
@@ -21,6 +23,8 @@ class YowCryptLayer(YowLayer):
 
     def send(self, data):
         outputKey = self.keys[1]
+        """:type : KeyStream"""
+
         length1 = len(data)
         if length1 > 1:
             if outputKey:
@@ -47,6 +51,8 @@ class YowCryptLayer(YowLayer):
 
     def receive(self, data):
         inputKey = self.keys[0]
+        """:type : KeyStream"""
+
         metaData = data[:3]
         payload = bytearray(data[3:])
 
